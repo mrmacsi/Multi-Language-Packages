@@ -1,4 +1,5 @@
 <?php
 use Main\Language;
+require_once "Language.php";
 $lang = new Language();
-$lang->createNewLanguage("asd00");
+echo $lang->createNewLanguage("tr");
