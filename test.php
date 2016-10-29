@@ -17,14 +17,14 @@ if(isset($_POST)){
         }
     }elseif(isset($_POST['addItemName'])){
         $array =[$_POST['itemName']=>$_POST['mean']];
-        if($lang->addItem($array,strtolower($_POST['lang']))){
+        if($lang->addOrChangeItem($array,strtolower($_POST['lang']))){
             echo strtolower($_POST['lang']). " mean added Successfully";
         }else{
             echo "Unsuccessfull";
         }
     }elseif(isset($_POST['changeName'])){
         $array =[$_POST['items']=>$_POST['changeName']];
-        if($lang->changeMean($array,strtolower($_POST['lang']))){
+        if($lang->addOrChangeItem($array,strtolower($_POST['lang']))){
             echo strtolower($_POST['lang']). " mean changed Successfully";
         }else{
             echo "Unsuccessfull";
