@@ -10,6 +10,8 @@ class Language{
     private $fileType           =   ".json";
     private $languages          =   [];
 
+
+    //The constructor will create default.json for default language and all languages tags will storage in this JSON.
     function __construct(){
         try{
             if (!file_exists($this->pathName.$this->defaultLangFile)){
@@ -27,6 +29,8 @@ class Language{
         }
     }
 
+
+    //It will create en.json file in lang directory. Also it will add an information inside of default.json.
     function createNewLanguage($langName){
         if($langName!=""){
             if (!file_exists($this->pathName)) mkdir($this->pathName, 0777);
@@ -50,6 +54,11 @@ class Language{
         }
     }
 
+
+    //This function adds a mean to the JSON file that you would like to add by an array.
+    //You can use this function without language name if you set the language before.
+    //If you don't use and if you didn't set it before it will show the default language.
+    //Also you can use the add too many values in same time.
     function addOrChangeItem($item,$langName=null){
         if (!$langName) $langName = $this->langName;
         $allTranslates =  $this->getAllTranslates($langName);
@@ -60,11 +69,14 @@ class Language{
         return true;
     }
 
+    //You can use this function instead of $lang->getMean("hello","en");
+    //That is easy way to access to translations from a variable.
     function getAllTranslates($langName=null){
         if (!$langName) $langName = $this->langName;
         return json_decode(file_get_contents($this->pathName.$langName.$this->fileType), true);
     }
 
+    //You can set the language for one time and you can use it in everywhere without setting again.
     function setLanguage($langName){
         $this->langName =   $langName;
         $default        =   json_decode(file_get_contents($this->pathName.$this->defaultLangFile), true);
@@ -75,14 +87,19 @@ class Language{
         return true;
     }
 
+    //That function will return the current language that you set before or default ones.
     function getCurrentLanguage(){
         return $this->langName;
     }
 
+    //You will get the all of the language tags that added to system before.
     function getAllLanguages(){
         return $this->languages;
     }
 
+    //You can get the means one by one with this funtion.
+    //You can use this function without language name if you set the language before. If you don't use and if you didn't set it before it will show the default language.
+    //If you didn't add values for all languages it will show you the error that is "Not Found in the JSON".
     function getMean($item,$langName=null){
         try{
             if (!$langName) $langName = $this->langName;
