@@ -41,13 +41,15 @@ You can set the language for one time and you can use it in everywhere without s
 
 <pre>
 $allOfTranslates = getAllTranslates("en");
+
 echo $allOfTranslates['how_are_you'];
+
 How are you
 </pre>
 
 You can use this function instead of $lang->getMean("hello","en");
-
 That is easy way to access to translations from a variable.
+
 
 <pre>
 $lang->getCurrentLanguage();
