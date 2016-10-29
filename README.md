@@ -35,6 +35,7 @@ $lang->getAllLanguages();
 You will get the all of the language tags that added to system before.
 
 $lang->getMean("hello","en");
+
 Hello
 You can get the means one by one with this funtion.
 You can use this function without language name if you set the language before. If you don't use and if you didn't set it before it will show the default language.
