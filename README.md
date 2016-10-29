@@ -93,7 +93,7 @@ If you didn't add values for all languages it will show you the error that is "N
 <pre>
 $.getJSON("lang/default.json").done(function( data ) {
 
-<strong>You will learn the default language in Javascript.</strong>
+<strong>You will get the default language in Javascript.</strong>
 
 $.getJSON("lang/"+data.defaultLang+".json").done(function( lang ) {
 
