@@ -54,11 +54,11 @@ $lang->getAllLanguages();
 
 You will get the all of the language tags that added to system before.
 
-<code>
+<pre>
 $lang->getMean("hello","en");
 
 Hello
-</code>
+</pre>
 
 You can get the means one by one with this funtion.
 You can use this function without language name if you set the language before. If you don't use and if you didn't set it before it will show the default language.
@@ -66,16 +66,20 @@ If you didn't add values for all languages it will show you the error that is "N
 
 
 # How to use in Javascript
-<code>
+<pre>
 $.getJSON("lang/default.json").done(function( data ) {
+
 You will learn the default language in Javascript.
 
 $.getJSON("lang/"+data.defaultLang+".json").done(function( lang ) {
+
 That will show you every translates from default JSON file in Javascript.
 
 console.log(lang.hello);
+
 });
+
 });
-</code>
+</pre>
 
 MrMacsi
