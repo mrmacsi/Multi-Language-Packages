@@ -5,7 +5,7 @@ use Main\Language;
 require_once "Language.php";
 $lang = new Language();</pre>
 
-Example default.json in Packages
+<strong>Example default.json in Packages</strong>
 <pre>{"defaultLang":"en","languages":["tr","en","de"]}</pre>
 
 The constructor will create default.json for default language and all languages tags will storage in this JSON.
