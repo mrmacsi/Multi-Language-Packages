@@ -40,6 +40,8 @@ You can set the language for one time and you can use it in everywhere without s
 
 <pre>
 $lang->getCurrentLanguage();
+
+["en"]
 </pre>
 This function will return the current language that you set before or default ones.
 
@@ -53,9 +55,9 @@ You will get the all of the language tags that added to system before.
 
 <code>
 $lang->getMean("hello","en");
-</code>
 
 Hello
+</code>
 
 You can get the means one by one with this funtion.
 You can use this function without language name if you set the language before. If you don't use and if you didn't set it before it will show the default language.
@@ -65,7 +67,6 @@ If you didn't add values for all languages it will show you the error that is "N
 # How to use in Javascript
 <code>
 $.getJSON("lang/default.json").done(function( data ) {
-
 \\You will learn the default language in Javascript.
 	$.getJSON("lang/"+data.defaultLang+".json").done(function( lang ) {
 	
