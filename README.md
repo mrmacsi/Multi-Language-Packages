@@ -1,4 +1,4 @@
-# Multi-Language-Packages
+# Multi-Language-Packages JSON & PHP
 # How to use in PHP
 
 use Main\Language;
@@ -46,7 +46,7 @@ If you didn't add values for all languages it will show you the error that is "N
 $.getJSON("lang/default.json").done(function( data ) {
 \\You will learn the default language in Javascript.
 	$.getJSON("lang/"+data.defaultLang+".json").done(function( lang ) {
-	\\Thant will show you every translates from default JSON file in Javascript.
+	\\That will show you every translates from default JSON file in Javascript.
 		console.log(lang.hello);
 	});
 });
