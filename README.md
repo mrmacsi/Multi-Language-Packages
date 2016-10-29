@@ -9,12 +9,13 @@ $lang = new Language();</pre>
 <pre>{"defaultLang":"en","languages":["tr","en","de"]}</pre>
 
 The constructor will create default.json for default language and all languages tags will storage in this JSON.
-
+<pre>
 $lang->createNewLanguage("en");
 
 $lang->createNewLanguage("tr");
 
 $lang->createNewLanguage("de");
+</pre>
 
 It will create en.json file in lang directory. Also it will add an information inside of default.json.
 <pre>
@@ -67,11 +68,10 @@ If you didn't add values for all languages it will show you the error that is "N
 # How to use in Javascript
 <code>
 $.getJSON("lang/default.json").done(function( data ) {
-\\You will learn the default language in Javascript.
+You will learn the default language in Javascript.
 	$.getJSON("lang/"+data.defaultLang+".json").done(function( lang ) {
-	
-	\\That will show you every translates from default JSON file in Javascript.
-		console.log(lang.hello);
+	That will show you every translates from default JSON file in Javascript.
+	console.log(lang.hello);
 	});
 });
 </code>
