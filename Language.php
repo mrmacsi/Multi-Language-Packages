@@ -51,10 +51,11 @@ class Language{
         }
     }
 
-    function addItem($array,$langName,$pathName=null){
-        if(!$pathName) $pathName = $this->pathName;
+    function addOrChangeItem($item,$langName=null,$pathName=null){
+        if (!$langName) $langName = $this->langName;
+        if (!file_exists($pathName.$langName.$this->fileType)) $pathName = $this->pathName;
         $allTranslates =  $this->getAllTranslates($langName);
-        foreach($array as $per=>$key) $allTranslates[str_replace(' ','_',strtolower($per))] =  $key;
+        foreach($item as $per=>$key) $allTranslates[str_replace(' ','_',strtolower($per))] =  $key;
         $fp = fopen($pathName.$langName.$this->fileType, 'w');
         fwrite($fp, json_encode($allTranslates));
         fclose($fp);
@@ -83,17 +84,6 @@ class Language{
 
     function getAllLanguages(){
         return $this->languages;
-    }
-
-    function changeMean($item,$langName=null,$pathName=null){
-        if (!$langName) $langName = $this->langName;
-        if (!file_exists($pathName.$langName.$this->fileType)) $pathName = $this->pathName;
-        $allTranslates =  $this->getAllTranslates($langName);
-        foreach($item as $per=>$key) $allTranslates[$per] =  $key;
-        $fp = fopen($pathName.$langName.$this->fileType, 'w');
-        fwrite($fp, json_encode($allTranslates));
-        fclose($fp);
-        return true;
     }
 
     function getMean($item,$langName=null,$pathName=null){
