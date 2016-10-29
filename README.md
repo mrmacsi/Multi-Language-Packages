@@ -76,6 +76,7 @@ $.getJSON("lang/"+data.defaultLang+".json").done(function( lang ) {
 That will show you every translates from default JSON file in Javascript.
 
 console.log(lang.hello);
+//Hello
 
 });
 
