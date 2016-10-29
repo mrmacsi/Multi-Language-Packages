@@ -2,4 +2,5 @@
 use Main\Language;
 require_once "Language.php";
 $lang = new Language();
-echo $lang->createNewLanguage("tr");
+$lang->createNewLanguage('seqws');
+$lang->addItem(['xzc'=>"asd",'qwweqw'=>"macit",'ads'=>"ww"],'seqws');

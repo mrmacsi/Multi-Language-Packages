@@ -7,26 +7,36 @@ class Language{
     private $pathName           =   "lang/";
     private $langName           =   "tr";
     private $defaultLangFile    =   "default.json";
+    private $fileType           =   ".json";
+    private $languages          =   [];
 
-    function __construct()
-    {
+    function __construct(){
         if (!file_exists($this->pathName.$this->defaultLangFile)){
             $fp = fopen($this->pathName.$this->defaultLangFile, 'w');
             $array =['defaultLang'=>$this->langName];
             fwrite($fp, json_encode($array));
             fclose($fp);
         }else{
-            $default        = json_decode(file_get_contents($this->pathName.$this->defaultLangFile), true);
-            $this->langName = $default['defaultLang'];
+            $default        =   json_decode(file_get_contents($this->pathName.$this->defaultLangFile), true);
+            $this->langName =   $default['defaultLang'];
+            $this->languages=   $default['languages'];
         }
     }
 
     function createNewLanguage($langName,$pathName=null){
         if(!$pathName) $pathName = $this->pathName;
         if (!file_exists($pathName)) mkdir($pathName, 0777);
-        $langName = str_replace('.json','',$langName).'.json';
-        if (!file_exists($pathName.$langName)){
-         fopen($pathName.$langName, 'w');
+        if (!file_exists($pathName.$langName.$this->fileType)){
+            $default = json_decode(file_get_contents($this->pathName.$this->defaultLangFile), true);
+            if($default['languages']){
+                foreach($default['languages'] as $per) $languages[] =  $per;
+            }
+            $languages[] =  $langName;
+            $default['languages'] =  array_unique($languages);
+            fopen($this->pathName.$langName.$this->fileType, 'w');
+            $fp = fopen($this->pathName.$this->defaultLangFile, 'w');
+            fwrite($fp, json_encode($default));
+            fclose($fp);
             return true;
         }else{
             return false;
@@ -35,17 +45,18 @@ class Language{
 
     function addItem($array,$langName,$pathName=null){
         if(!$pathName) $pathName = $this->pathName;
-        $langName = str_replace('.json','',$langName).'.json';
-        $fp = fopen($pathName.$langName, 'w');
-        fwrite($fp, json_encode($array));
+        $allTranslates =  $this->getAllTranslates($langName);
+        foreach($array as $per=>$key) $allTranslates[$per] =  $key;
+        $fp = fopen($pathName.$langName.$this->fileType, 'w');
+        fwrite($fp, json_encode($allTranslates));
         fclose($fp);
         return true;
     }
 
     function getAllTranslates($langName=null,$pathName=null){
-        if (!file_exists($pathName.$langName)) $pathName = $this->pathName;
-        if (!$langName) $langName = str_replace('.json','',$this->langName).'.json';
-        else $langName = str_replace('.json','',$langName).'.json';
+        if (!file_exists($pathName.$langName.$this->fileType)) $pathName = $this->pathName;
+        if (!$langName) $langName = $this->langName.$this->fileType;
+        else $langName = $langName.$this->fileType;
         return json_decode(file_get_contents($pathName.$langName), true);
     }
 
@@ -58,7 +69,11 @@ class Language{
         return true;
     }
 
-    function getLanguage(){
+    function getCurrentLanguage(){
+        return $this->langName;
+    }
+
+    function getAllLanguages(){
         return $this->langName;
     }
 }
