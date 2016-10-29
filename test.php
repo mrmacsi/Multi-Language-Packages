@@ -2,16 +2,6 @@
 use Main\Language;
 require_once "Language.php";
 $lang = new Language();
-/*use Main\Language;
-require_once "Language.php";
-$lang = new Language();
-$lang->createNewLanguage('de');
-$lang->addItem(['hello'=>"Hello",'how_are_you'=>"How are you?",'good'=>"Good"],'de');
-$lang->changeMean('en',['hello'=>"Hi"]);
-var_dump($lang->getAllTranslates('en'));
-echo $lang->getMean('hello');
-$translates = $lang->getAllTranslates();
-print_r($translates);*/
 if(isset($_POST)){
     if(isset($_POST['setLang'])){
         if($lang->setLanguage(strtolower($_POST['setLang']))){
@@ -26,9 +16,19 @@ if(isset($_POST)){
             echo "Unsuccessfull";
         }
     }elseif(isset($_POST['addItemName'])){
-
-    }elseif(isset($_POST['newLang'])){
-
+        $array =[$_POST['itemName']=>$_POST['mean']];
+        if($lang->addItem($array,strtolower($_POST['lang']))){
+            echo strtolower($_POST['lang']). " mean added Successfully";
+        }else{
+            echo "Unsuccessfull";
+        }
+    }elseif(isset($_POST['changeName'])){
+        $array =[$_POST['items']=>$_POST['changeName']];
+        if($lang->changeMean($array,strtolower($_POST['lang']))){
+            echo strtolower($_POST['lang']). " mean changed Successfully";
+        }else{
+            echo "Unsuccessfull";
+        }
     }
 }
 ?>
@@ -61,6 +61,7 @@ if(isset($_POST)){
                     <label for="languages">Set Language</label>
                     <select class="form-control" name="setLang" id="languages">
                     </select>
+                    <small id="emailHelp" class="form-text text-muted">Choose a language that you would like to set.(if it didn't refresh, clear your cache.)</small>
                 </div>
                 <input type="submit" value="Submit" class="btn btn-primary">
             </form>
@@ -70,7 +71,7 @@ if(isset($_POST)){
                 <div class="form-group">
                     <label for="newlang">Create New Language</label>
                     <input type="text" class="form-control" id="newlang" name="newLang" placeholder="Enter New Language Tag Example : en">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <small id="emailHelp" class="form-text text-muted">Enter a new Language by 2 Character.</small>
                 </div>
                 <input type="submit" value="Submit" class="btn btn-primary">
             </form>
@@ -82,7 +83,7 @@ if(isset($_POST)){
                     <select class="form-control" name="lang" id="languages2"></select>
                     <input type="text" class="form-control" name="itemName" placeholder="Enter New item Name">
                     <input type="text" class="form-control" name="mean" placeholder="Enter New Mean">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <small id="emailHelp" class="form-text text-muted">Choose Language and enter Name and Mean.</small>
                 </div>
                 <input type="submit" value="Submit" name="addItemName" class="btn btn-primary">
             </form>
@@ -91,10 +92,10 @@ if(isset($_POST)){
             <form action="test.php" method="POST">
                 <div class="form-group">
                     <label for="newlang">Change Mean</label>
-                    <select class="form-control" id="languages3"></select>
-                    <select class="form-control" id="items"></select>
-                    <input type="text" class="form-control" id="newlang" placeholder="Choose Language and word to change">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <select class="form-control" name="lang" id="languages3" onchange="getTranslates(this.value)"></select>
+                    <select class="form-control" name="items" id="items"></select>
+                    <input type="text" class="form-control" name="changeName" id="newlang" placeholder="Choose Language and word to change">
+                    <small id="emailHelp" class="form-text text-muted">Choose the language that you would like to change and choose the item after enter a new mean</small>
                 </div>
                 <input type="submit" name="changeItemName" value="Submit" class="btn btn-primary">
             </form>
@@ -113,9 +114,18 @@ if(isset($_POST)){
             });
             $.getJSON("lang/"+data.defaultLang+".json").done(function( lang ) {
                 $("#examples2").append(JSON.stringify(lang,null,'<br>'));
+                getTranslates($("#languages3").val());
             });
         });
     });
+    function getTranslates(language){
+        $("#items").html("");
+        $.getJSON("lang/"+language+".json").done(function( lang ) {
+            $.each(lang, function(key, val) {
+                $("#items").append('<option value="'+key+'">'+val+'</option>');
+            });
+        });
+    }
 </script>
 </body>
 </html>

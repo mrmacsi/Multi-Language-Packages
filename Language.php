@@ -54,7 +54,7 @@ class Language{
     function addItem($array,$langName,$pathName=null){
         if(!$pathName) $pathName = $this->pathName;
         $allTranslates =  $this->getAllTranslates($langName);
-        foreach($array as $per=>$key) $allTranslates[$per] =  $key;
+        foreach($array as $per=>$key) $allTranslates[str_replace(' ','_',strtolower($per))] =  $key;
         $fp = fopen($pathName.$langName.$this->fileType, 'w');
         fwrite($fp, json_encode($allTranslates));
         fclose($fp);
@@ -69,12 +69,9 @@ class Language{
 
     function setLanguage($langName){
         $this->langName =   $langName;
-        $fp             =   fopen($this->pathName.$this->defaultLangFile, 'w');
         $default        =   json_decode(file_get_contents($this->pathName.$this->defaultLangFile), true);
-        var_dump($default);
-        $languages[] =  $langName;
-        $default['languages'] =  array_unique($languages);
         $default['defaultLang'] = $this->langName;
+        $fp             =   fopen($this->pathName.$this->defaultLangFile, 'w');
         fwrite($fp, json_encode($default));
         fclose($fp);
         return true;
