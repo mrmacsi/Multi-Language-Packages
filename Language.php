@@ -27,11 +27,10 @@ class Language{
         }
     }
 
-    function createNewLanguage($langName,$pathName=null){
+    function createNewLanguage($langName){
         if($langName!=""){
-            if(!$pathName) $pathName = $this->pathName;
-            if (!file_exists($pathName)) mkdir($pathName, 0777);
-            if (!file_exists($pathName.$langName.$this->fileType)){
+            if (!file_exists($this->pathName)) mkdir($this->pathName, 0777);
+            if (!file_exists($this->pathName.$langName.$this->fileType)){
                 $default = json_decode(file_get_contents($this->pathName.$this->defaultLangFile), true);
                 if(!empty($default['languages'])){
                     foreach($default['languages'] as $per) $languages[] =  $per;
@@ -51,21 +50,19 @@ class Language{
         }
     }
 
-    function addOrChangeItem($item,$langName=null,$pathName=null){
+    function addOrChangeItem($item,$langName=null){
         if (!$langName) $langName = $this->langName;
-        if (!file_exists($pathName.$langName.$this->fileType)) $pathName = $this->pathName;
         $allTranslates =  $this->getAllTranslates($langName);
         foreach($item as $per=>$key) $allTranslates[str_replace(' ','_',strtolower($per))] =  $key;
-        $fp = fopen($pathName.$langName.$this->fileType, 'w');
+        $fp = fopen($this->pathName.$langName.$this->fileType, 'w');
         fwrite($fp, json_encode($allTranslates));
         fclose($fp);
         return true;
     }
 
-    function getAllTranslates($langName=null,$pathName=null){
+    function getAllTranslates($langName=null){
         if (!$langName) $langName = $this->langName;
-        if (!file_exists($pathName.$langName.$this->fileType)) $pathName = $this->pathName;
-        return json_decode(file_get_contents($pathName.$langName.$this->fileType), true);
+        return json_decode(file_get_contents($this->pathName.$langName.$this->fileType), true);
     }
 
     function setLanguage($langName){
@@ -86,15 +83,14 @@ class Language{
         return $this->languages;
     }
 
-    function getMean($item,$langName=null,$pathName=null){
+    function getMean($item,$langName=null){
         try{
             if (!$langName) $langName = $this->langName;
-            if (!file_exists($pathName.$langName.$this->fileType)) $pathName = $this->pathName;
             $allTranslates =  $this->getAllTranslates($langName);
             if(isset($allTranslates[$item])){
                 return $allTranslates[$item];
             }else{
-                return $item." Not Found in ".$pathName.$langName.$this->fileType;
+                return $item." Not Found in ".$this->pathName.$langName.$this->fileType;
             }
         }catch(\Exception $e){
             return $e->getMessage();
