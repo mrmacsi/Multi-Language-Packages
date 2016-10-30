@@ -71,6 +71,10 @@ class Language{
 
     //You can use this function instead of $lang->getMean("hello","en");
     //That is easy way to access to translations from a variable.
+    //Example Uses
+    //$allOfTranslates = getAllTranslates("en");
+    //echo $allOfTranslates['how_are_you'];
+    //-How are you
     function getAllTranslates($langName=null){
         if (!$langName) $langName = $this->langName;
         return json_decode(file_get_contents($this->pathName.$langName.$this->fileType), true);
