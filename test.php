@@ -37,9 +37,9 @@ if(isset($_POST)){
     <title>PHP&JSON Language Pack Test Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <script src="jquery.min.js"></script>
-    <script src="bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="css/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container-fluid">
