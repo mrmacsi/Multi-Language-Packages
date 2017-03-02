@@ -59,7 +59,8 @@ class Language{
     //You can use this function without language name if you set the language before.
     //If you don't use and if you didn't set it before it will show the default language.
     //Also you can use the add too many values in same time.
-    //$item have to be a type of array and the values must be ['key'=>'example_key','value'=>'Example Value']
+    //$item have to be a type of array and the values must be like this ['example_key2','Example Value2']
+    //$item have to be a type of array and the values must be like this ['example_key','Example Value','example_key2','Example Value2']
     function addOrChangeItem($item,$langName=null){
         if (!$langName) $langName = $this->langName;
         $allTranslates =  $this->getAllTranslates($langName);
