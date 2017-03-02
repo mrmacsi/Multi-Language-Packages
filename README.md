@@ -19,11 +19,11 @@ $lang->createNewLanguage("tr");
 $lang->createNewLanguage("de");
 </pre>
 
-<strong>It will create en.json file in lang directory. Also it will add an information inside of default.json.</strong>
+<strong>addOrChangeItem function will create en.json file in lang directory. Also it will add an information inside of default.json.</strong>
 
 
 <pre>
-$lang->addOrChangeItem(["hello"=>Hello],"en");
+$lang->addOrChangeItem(["hello"=>"Hello"],"en");
 
 $lang->addOrChangeItem(["hello"=>"Selam"],"tr");
 
